@@ -1,0 +1,1249 @@
+RTDETR(
+  (backbone): PResNet(
+    (conv1): Sequential(
+      (conv1_1): ConvNormLayer(
+        (conv): ConvReLU2d(
+          (0): QuantConv2d(
+            3, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1)
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+          )
+          (1): ReLU(inplace=True)
+        )
+        (norm): Identity()
+        (act): Identity()
+      )
+      (conv1_2): ConvNormLayer(
+        (conv): ConvReLU2d(
+          (0): QuantConv2d(
+            32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+          )
+          (1): ReLU(inplace=True)
+        )
+        (norm): Identity()
+        (act): Identity()
+      )
+      (conv1_3): ConvNormLayer(
+        (conv): ConvReLU2d(
+          (0): QuantConv2d(
+            32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+          )
+          (1): ReLU(inplace=True)
+        )
+        (norm): Identity()
+        (act): Identity()
+      )
+    )
+    (res_layers): ModuleList(
+      (0): Blocks(
+        (blocks): ModuleList(
+          (0): BasicBlock(
+            (short): ConvNormLayer(
+              (conv): QuantConv2d(
+                64, 64, kernel_size=(1, 1), stride=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (branch2a): ConvNormLayer(
+              (conv): ConvReLU2d(
+                (0): QuantConv2d(
+                  64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                  (w_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                  (a_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                )
+                (1): ReLU(inplace=True)
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (branch2b): ConvNormLayer(
+              (conv): QuantConv2d(
+                64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): ReLU(inplace=True)
+          )
+          (1): BasicBlock(
+            (branch2a): ConvNormLayer(
+              (conv): ConvReLU2d(
+                (0): QuantConv2d(
+                  64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                  (w_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                  (a_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                )
+                (1): ReLU(inplace=True)
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (branch2b): ConvNormLayer(
+              (conv): QuantConv2d(
+                64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): ReLU(inplace=True)
+          )
+        )
+      )
+      (1): Blocks(
+        (blocks): ModuleList(
+          (0): BasicBlock(
+            (short): Sequential(
+              (pool): AvgPool2d(kernel_size=2, stride=2, padding=0)
+              (conv): ConvNormLayer(
+                (conv): QuantConv2d(
+                  64, 128, kernel_size=(1, 1), stride=(1, 1)
+                  (w_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                  (a_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                )
+                (norm): Identity()
+                (act): Identity()
+              )
+            )
+            (branch2a): ConvNormLayer(
+              (conv): ConvReLU2d(
+                (0): QuantConv2d(
+                  64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1)
+                  (w_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                  (a_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                )
+                (1): ReLU(inplace=True)
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (branch2b): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): ReLU(inplace=True)
+          )
+          (1): BasicBlock(
+            (branch2a): ConvNormLayer(
+              (conv): ConvReLU2d(
+                (0): QuantConv2d(
+                  128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                  (w_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                  (a_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                )
+                (1): ReLU(inplace=True)
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (branch2b): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): ReLU(inplace=True)
+          )
+        )
+      )
+      (2): Blocks(
+        (blocks): ModuleList(
+          (0): BasicBlock(
+            (short): Sequential(
+              (pool): AvgPool2d(kernel_size=2, stride=2, padding=0)
+              (conv): ConvNormLayer(
+                (conv): QuantConv2d(
+                  128, 256, kernel_size=(1, 1), stride=(1, 1)
+                  (w_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                  (a_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                )
+                (norm): Identity()
+                (act): Identity()
+              )
+            )
+            (branch2a): ConvNormLayer(
+              (conv): ConvReLU2d(
+                (0): QuantConv2d(
+                  128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1)
+                  (w_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                  (a_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                )
+                (1): ReLU(inplace=True)
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (branch2b): ConvNormLayer(
+              (conv): QuantConv2d(
+                256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): ReLU(inplace=True)
+          )
+          (1): BasicBlock(
+            (branch2a): ConvNormLayer(
+              (conv): ConvReLU2d(
+                (0): QuantConv2d(
+                  256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                  (w_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                  (a_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                )
+                (1): ReLU(inplace=True)
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (branch2b): ConvNormLayer(
+              (conv): QuantConv2d(
+                256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): ReLU(inplace=True)
+          )
+        )
+      )
+      (3): Blocks(
+        (blocks): ModuleList(
+          (0): BasicBlock(
+            (short): Sequential(
+              (pool): AvgPool2d(kernel_size=2, stride=2, padding=0)
+              (conv): ConvNormLayer(
+                (conv): QuantConv2d(
+                  256, 512, kernel_size=(1, 1), stride=(1, 1)
+                  (w_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                  (a_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                )
+                (norm): Identity()
+                (act): Identity()
+              )
+            )
+            (branch2a): ConvNormLayer(
+              (conv): ConvReLU2d(
+                (0): QuantConv2d(
+                  256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1)
+                  (w_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                  (a_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                )
+                (1): ReLU(inplace=True)
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (branch2b): ConvNormLayer(
+              (conv): QuantConv2d(
+                512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): ReLU(inplace=True)
+          )
+          (1): BasicBlock(
+            (branch2a): ConvNormLayer(
+              (conv): ConvReLU2d(
+                (0): QuantConv2d(
+                  512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                  (w_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                  (a_quantizer): NNIEFakeQuantize(
+                    fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                    (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                  )
+                )
+                (1): ReLU(inplace=True)
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (branch2b): ConvNormLayer(
+              (conv): QuantConv2d(
+                512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): ReLU(inplace=True)
+          )
+        )
+      )
+    )
+  )
+  (decoder): RTDETRTransformer(
+    (input_proj): ModuleList(
+      (0-2): 3 x Sequential(
+        (conv): QuantConv2d(
+          256, 256, kernel_size=(1, 1), stride=(1, 1)
+          (w_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+          (a_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+        )
+        (norm): Identity()
+      )
+    )
+    (decoder): TransformerDecoder(
+      (layers): ModuleList(
+        (0): TransformerDecoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+          )
+          (dropout1): Dropout(p=0.0, inplace=False)
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (cross_attn): MSDeformableAttention(
+            (sampling_offsets): QuantLinear(
+              in_features=256, out_features=192, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-0.965740442276001, max_val=1.0565872192382812 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-4.764419078826904, max_val=2.2924396991729736 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (attention_weights): QuantLinear(
+              in_features=256, out_features=96, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-0.3151431679725647, max_val=0.3339608311653137 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-4.764419078826904, max_val=2.2924396991729736 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (value_proj): QuantLinear(
+              in_features=256, out_features=256, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-0.33240559697151184, max_val=0.3260965049266815 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-2.9383771419525146, max_val=3.3949265480041504 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (output_proj): QuantLinear(
+              in_features=256, out_features=256, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-0.3461682200431824, max_val=0.34946706891059875 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-2.3623251914978027, max_val=2.0613391399383545 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          )
+          (dropout2): Dropout(p=0.0, inplace=False)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (linear1): QuantLinear(
+            in_features=256, out_features=1024, bias=True
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=-0.49740099906921387, max_val=0.6659208536148071 ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=-10.044561386108398, max_val=5.419553756713867 ch_axis=-1 pot=False)
+            )
+          )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          (dropout3): Dropout(p=0.0, inplace=False)
+          (linear2): QuantLinear(
+            in_features=1024, out_features=256, bias=True
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=-0.7806568741798401, max_val=0.7268974781036377 ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=0.0, max_val=4.770840167999268 ch_axis=-1 pot=False)
+            )
+          )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          (dropout4): Dropout(p=0.0, inplace=False)
+          (norm3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        )
+        (1): TransformerDecoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+          )
+          (dropout1): Dropout(p=0.0, inplace=False)
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (cross_attn): MSDeformableAttention(
+            (sampling_offsets): QuantLinear(
+              in_features=256, out_features=192, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-1.043764591217041, max_val=0.8009588718414307 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-4.509112358093262, max_val=3.8255765438079834 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (attention_weights): QuantLinear(
+              in_features=256, out_features=96, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-0.38670697808265686, max_val=0.4403449594974518 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-4.509112358093262, max_val=3.8255765438079834 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (value_proj): QuantLinear(
+              in_features=256, out_features=256, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-0.3240043818950653, max_val=0.32604557275772095 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-2.9383771419525146, max_val=3.3949265480041504 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (output_proj): QuantLinear(
+              in_features=256, out_features=256, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-0.3990444540977478, max_val=0.3497167229652405 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-1.5614683628082275, max_val=1.2053658962249756 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          )
+          (dropout2): Dropout(p=0.0, inplace=False)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (linear1): QuantLinear(
+            in_features=256, out_features=1024, bias=True
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=-0.48047199845314026, max_val=0.4002103805541992 ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=-4.577765941619873, max_val=6.431879997253418 ch_axis=-1 pot=False)
+            )
+          )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          (dropout3): Dropout(p=0.0, inplace=False)
+          (linear2): QuantLinear(
+            in_features=1024, out_features=256, bias=True
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=-0.8514452576637268, max_val=0.8783921599388123 ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=0.0, max_val=6.771404266357422 ch_axis=-1 pot=False)
+            )
+          )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          (dropout4): Dropout(p=0.0, inplace=False)
+          (norm3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        )
+        (2): TransformerDecoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+          )
+          (dropout1): Dropout(p=0.0, inplace=False)
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (cross_attn): MSDeformableAttention(
+            (sampling_offsets): QuantLinear(
+              in_features=256, out_features=192, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-0.38806140422821045, max_val=0.40217703580856323 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-5.432988166809082, max_val=3.254450798034668 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (attention_weights): QuantLinear(
+              in_features=256, out_features=96, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-0.5424128770828247, max_val=0.5421968102455139 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-5.432988166809082, max_val=3.254450798034668 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (value_proj): QuantLinear(
+              in_features=256, out_features=256, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-0.30712220072746277, max_val=0.34167781472206116 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-2.9383771419525146, max_val=3.3949265480041504 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (output_proj): QuantLinear(
+              in_features=256, out_features=256, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=-0.36602020263671875, max_val=0.3449382483959198 ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=-1.5241135358810425, max_val=1.4912890195846558 ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          )
+          (dropout2): Dropout(p=0.0, inplace=False)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (linear1): QuantLinear(
+            in_features=256, out_features=1024, bias=True
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=-0.35347044467926025, max_val=0.386730819940567 ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=-8.166695594787598, max_val=4.688607215881348 ch_axis=-1 pot=False)
+            )
+          )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          (dropout3): Dropout(p=0.0, inplace=False)
+          (linear2): QuantLinear(
+            in_features=1024, out_features=256, bias=True
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=-0.6110113859176636, max_val=0.6846051216125488 ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=0.0, max_val=4.861372947692871 ch_axis=-1 pot=False)
+            )
+          )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          (dropout4): Dropout(p=0.0, inplace=False)
+          (norm3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        )
+      )
+    )
+    (denoising_class_embed): Embedding(81, 256, padding_idx=80)
+    (query_pos_head): MLP(
+      (layers): ModuleList(
+        (0): QuantLinear(
+          in_features=4, out_features=512, bias=True
+          (w_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): MinMaxObserver(min_val=-3.860534906387329, max_val=0.4190181791782379 ch_axis=-1 pot=False)
+          )
+          (a_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): EMAMSEObserver(min_val=0.00640585133805871, max_val=0.9899998307228088 ch_axis=-1 pot=False)
+          )
+        )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+        (1): QuantLinear(
+          in_features=512, out_features=256, bias=True
+          (w_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): MinMaxObserver(min_val=-2.5902838706970215, max_val=2.1727707386016846 ch_axis=-1 pot=False)
+          )
+          (a_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): EMAMSEObserver(min_val=0.0, max_val=0.3497923016548157 ch_axis=-1 pot=False)
+          )
+        )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+      )
+      (act): ReLU(inplace=True)
+    )
+    (enc_output): Sequential(
+      (0): QuantLinear(
+        in_features=256, out_features=256, bias=True
+        (w_quantizer): NNIEFakeQuantize(
+          fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          (activation_post_process): MinMaxObserver(min_val=-0.5099165439605713, max_val=0.6328888535499573 ch_axis=-1 pot=False)
+        )
+        (a_quantizer): NNIEFakeQuantize(
+          fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          (activation_post_process): EMAMSEObserver(min_val=-2.6445393562316895, max_val=3.055434226989746 ch_axis=-1 pot=False)
+        )
+      )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+      (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    )
+    (enc_score_head): QuantLinear(
+      in_features=256, out_features=80, bias=True
+      (w_quantizer): NNIEFakeQuantize(
+        fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+        (activation_post_process): MinMaxObserver(min_val=-0.3939422070980072, max_val=0.3380909562110901 ch_axis=-1 pot=False)
+      )
+      (a_quantizer): NNIEFakeQuantize(
+        fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+        (activation_post_process): EMAMSEObserver(min_val=-3.427661418914795, max_val=3.882246255874634 ch_axis=-1 pot=False)
+      )
+    )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+    (enc_bbox_head): MLP(
+      (layers): ModuleList(
+        (0): QuantLinear(
+          in_features=256, out_features=256, bias=True
+          (w_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): MinMaxObserver(min_val=-0.34115228056907654, max_val=0.29172882437705994 ch_axis=-1 pot=False)
+          )
+          (a_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): EMAMSEObserver(min_val=-3.427661418914795, max_val=3.882246255874634 ch_axis=-1 pot=False)
+          )
+        )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+        (1): QuantLinear(
+          in_features=256, out_features=256, bias=True
+          (w_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): MinMaxObserver(min_val=-0.5836135149002075, max_val=0.33626753091812134 ch_axis=-1 pot=False)
+          )
+          (a_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): EMAMSEObserver(min_val=0.0, max_val=5.338812351226807 ch_axis=-1 pot=False)
+          )
+        )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+        (2): QuantLinear(
+          in_features=256, out_features=4, bias=True
+          (w_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): MinMaxObserver(min_val=-0.3441298007965088, max_val=1.9304440021514893 ch_axis=-1 pot=False)
+          )
+          (a_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): EMAMSEObserver(min_val=0.0, max_val=4.933961391448975 ch_axis=-1 pot=False)
+          )
+        )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+      )
+      (act): ReLU(inplace=True)
+    )
+    (dec_score_head): ModuleList(
+      (0-2): 3 x QuantLinear(
+        in_features=256, out_features=80, bias=True
+        (w_quantizer): NNIEFakeQuantize(
+          fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+        )
+        (a_quantizer): NNIEFakeQuantize(
+          fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+        )
+      )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+    )
+    (dec_bbox_head): ModuleList(
+      (0-2): 3 x MLP(
+        (layers): ModuleList(
+          (0-1): 2 x QuantLinear(
+            in_features=256, out_features=256, bias=True
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+          )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+          (2): QuantLinear(
+            in_features=256, out_features=4, bias=True
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+          )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+        )
+        (act): ReLU(inplace=True)
+      )
+    )
+  )
+  (encoder): HybridEncoder(
+    (input_proj): ModuleList(
+      (0): Sequential(
+        (0): QuantConv2d(
+          128, 256, kernel_size=(1, 1), stride=(1, 1)
+          (w_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+          (a_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+        )
+        (1): Identity()
+      )
+      (1): Sequential(
+        (0): QuantConv2d(
+          256, 256, kernel_size=(1, 1), stride=(1, 1)
+          (w_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+          (a_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+        )
+        (1): Identity()
+      )
+      (2): Sequential(
+        (0): QuantConv2d(
+          512, 256, kernel_size=(1, 1), stride=(1, 1)
+          (w_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+          (a_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+        )
+        (1): Identity()
+      )
+    )
+    (encoder): ModuleList(
+      (0): TransformerEncoder(
+        (layers): ModuleList(
+          (0): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+            )
+            (linear1): QuantLinear(
+              in_features=256, out_features=1024, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (dropout): Dropout(p=0.0, inplace=False)
+            (linear2): QuantLinear(
+              in_features=1024, out_features=256, bias=True
+              (w_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+              )
+              (a_quantizer): NNIEFakeQuantize(
+                fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+              )
+            )fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1, fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (dropout1): Dropout(p=0.0, inplace=False)
+            (dropout2): Dropout(p=0.0, inplace=False)
+            (activation): GELU(approximate='none')
+          )
+        )
+      )
+    )
+    (lateral_convs): ModuleList(
+      (0-1): 2 x ConvNormLayer(
+        (conv): QuantConv2d(
+          256, 256, kernel_size=(1, 1), stride=(1, 1)
+          (w_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+          (a_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+        )
+        (norm): Identity()
+        (act): SiLU(inplace=True)
+      )
+    )
+    (fpn_blocks): ModuleList(
+      (0-1): 2 x CSPRepLayer(
+        (conv1): ConvNormLayer(
+          (conv): QuantConv2d(
+            512, 128, kernel_size=(1, 1), stride=(1, 1)
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+          )
+          (norm): Identity()
+          (act): SiLU(inplace=True)
+        )
+        (conv2): ConvNormLayer(
+          (conv): QuantConv2d(
+            512, 128, kernel_size=(1, 1), stride=(1, 1)
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+          )
+          (norm): Identity()
+          (act): SiLU(inplace=True)
+        )
+        (bottlenecks): Sequential(
+          (0): RepVggBlock(
+            (conv1): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (conv2): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(1, 1), stride=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): SiLU(inplace=True)
+          )
+          (1): RepVggBlock(
+            (conv1): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (conv2): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(1, 1), stride=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): SiLU(inplace=True)
+          )
+          (2): RepVggBlock(
+            (conv1): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (conv2): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(1, 1), stride=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): SiLU(inplace=True)
+          )
+        )
+        (conv3): ConvNormLayer(
+          (conv): QuantConv2d(
+            128, 256, kernel_size=(1, 1), stride=(1, 1)
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+          )
+          (norm): Identity()
+          (act): SiLU(inplace=True)
+        )
+      )
+    )
+    (downsample_convs): ModuleList(
+      (0-1): 2 x ConvNormLayer(
+        (conv): QuantConv2d(
+          256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1)
+          (w_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+          (a_quantizer): NNIEFakeQuantize(
+            fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+            (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+          )
+        )
+        (norm): Identity()
+        (act): SiLU(inplace=True)
+      )
+    )
+    (pan_blocks): ModuleList(
+      (0-1): 2 x CSPRepLayer(
+        (conv1): ConvNormLayer(
+          (conv): QuantConv2d(
+            512, 128, kernel_size=(1, 1), stride=(1, 1)
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+          )
+          (norm): Identity()
+          (act): SiLU(inplace=True)
+        )
+        (conv2): ConvNormLayer(
+          (conv): QuantConv2d(
+            512, 128, kernel_size=(1, 1), stride=(1, 1)
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+          )
+          (norm): Identity()
+          (act): SiLU(inplace=True)
+        )
+        (bottlenecks): Sequential(
+          (0): RepVggBlock(
+            (conv1): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (conv2): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(1, 1), stride=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): SiLU(inplace=True)
+          )
+          (1): RepVggBlock(
+            (conv1): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (conv2): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(1, 1), stride=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): SiLU(inplace=True)
+          )
+          (2): RepVggBlock(
+            (conv1): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (conv2): ConvNormLayer(
+              (conv): QuantConv2d(
+                128, 128, kernel_size=(1, 1), stride=(1, 1)
+                (w_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+                (a_quantizer): NNIEFakeQuantize(
+                  fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+                  (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+                )
+              )
+              (norm): Identity()
+              (act): Identity()
+            )
+            (act): SiLU(inplace=True)
+          )
+        )
+        (conv3): ConvNormLayer(
+          (conv): QuantConv2d(
+            128, 256, kernel_size=(1, 1), stride=(1, 1)
+            (w_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): MinMaxObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+            (a_quantizer): NNIEFakeQuantize(
+              fake_quant_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), observer_enabled=tensor([1], device='cuda:0', dtype=torch.uint8), quant_min=-32, quant_max=31, dtype=torch.qint8, qscheme=torch.per_tensor_symmetric, ch_axis=-1,
+              (activation_post_process): EMAMSEObserver(min_val=inf, max_val=-inf ch_axis=-1 pot=False)
+            )
+          )
+          (norm): Identity()
+          (act): SiLU(inplace=True)
+        )
+      )
+    )
+  )
+)
