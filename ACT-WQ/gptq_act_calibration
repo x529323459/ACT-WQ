@@ -1,0 +1,344 @@
+# 仅 GPTQ 激活校准（per-channel）
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from typing import Dict, Any, Tuple, List
+from mqbench.gptq_quant_modules import GPTQConv2d, GPTQLinear
+
+def _flatten_out(x: Any) -> torch.Tensor:
+    if isinstance(x, torch.Tensor):
+        return x.float().reshape(-1)
+    elif isinstance(x, dict):
+        vals = [ _flatten_out(v) for k, v in sorted(x.items()) if isinstance(v, (torch.Tensor, dict, list, tuple)) ]
+        return torch.cat(vals) if len(vals) else torch.tensor(0., device=next(iter(x.values())).device)
+    elif isinstance(x, (list, tuple)):
+        vals = [ _flatten_out(v) for v in x if isinstance(v, (torch.Tensor, dict, list, tuple)) ]
+        if len(vals) == 0:
+            return torch.tensor(0.)
+        dev = vals[0].device
+        return torch.cat(vals) if len(vals) else torch.tensor(0., device=dev)
+    return torch.tensor(0.)
+
+def _proxy_distill_loss(student_out: Any, teacher_out: Any) -> torch.Tensor:
+    s = _flatten_out(student_out)
+    t = _flatten_out(teacher_out)
+    n = min(s.numel(), t.numel())
+    if n == 0:
+        return (s - s).sum()
+    return F.mse_loss(s[:n], t[:n])
+
+def _get_gptq_layers(model: nn.Module) -> Dict[str, nn.Module]:
+    layers = {}
+    for n, m in model.named_modules():
+        if isinstance(m, (GPTQConv2d, GPTQLinear)):
+            layers[n] = m
+    return layers
+
+def _get_ch_axis(mod: nn.Module, x: torch.Tensor) -> int:
+    # Conv2d: NCHW -> 1; Linear: [B, C] or [B, T, C] -> 最后一维
+    if isinstance(mod, GPTQConv2d):
+        return 1
+    else:
+        return x.dim() - 1
+
+class ChannelActBuf:
+    """
+    按通道缓存采样值与梯度平方。
+    """
+    def __init__(self, max_batches=64, C_hint=None):
+        self.max_batches = max_batches
+        self.batches = 0
+        self.C = C_hint
+        self.xs: List[List[torch.Tensor]] = None
+        self.g2: List[List[torch.Tensor]] = None
+
+    def _ensure_init(self, C: int):
+        if self.C is None:
+            self.C = C
+            self.xs = [[] for _ in range(C)]
+            self.g2 = [[] for _ in range(C)]
+
+    def add(self, C: int, channel_ids: List[int], xs_cpu_list: List[torch.Tensor], gs_cpu_list: List[torch.Tensor]):
+        if self.batches >= self.max_batches:
+            return
+        self._ensure_init(C)
+        for c, xs, gs in zip(channel_ids, xs_cpu_list, gs_cpu_list):
+            if xs.numel() == 0:
+                continue
+            self.xs[c].append(xs.detach().cpu())
+            self.g2[c].append(gs.detach().cpu() ** 2)
+        self.batches += 1
+
+    def finalize(self) -> Tuple[List[torch.Tensor], torch.Tensor]:
+        """
+        返回：
+          - xs_per_ch: 长度 C 的列表，每个元素是该通道的样本向量（可能为空）
+          - H_per_ch: 形状 [C] 的张量（每通道 Fisher 对角标量）
+        """
+        xs_per_ch: List[torch.Tensor] = []
+        H_list = []
+        C = self.C if self.C is not None else 0
+        for c in range(C):
+            xs = torch.cat(self.xs[c], dim=0) if len(self.xs[c]) else torch.tensor([], dtype=torch.float32)
+            g2 = torch.cat(self.g2[c], dim=0) if len(self.g2[c]) else torch.tensor([], dtype=torch.float32)
+            H = float(g2.mean().item()) if g2.numel() > 0 else 1.0
+            xs_per_ch.append(xs)
+            H_list.append(H)
+        H_per_ch = torch.tensor(H_list, dtype=torch.float32)
+        return xs_per_ch, H_per_ch
+
+class TensorHookMgr:
+    """
+    仅使用 Tensor 级梯度 hook，前向时抽样若干通道与通道内位置；反传时取同位置梯度。
+    """
+    def __init__(self, modules: Dict[str, nn.Module], per_batch_samples=4096, max_batches=64, max_channels=128):
+        self.modules = modules
+        self.per_batch_samples = per_batch_samples
+        self.max_batches = max_batches
+        self.max_channels = max_channels
+        self.buffers: Dict[str, ChannelActBuf] = {n: ChannelActBuf(max_batches) for n in modules}
+        self.fwhandles: List[torch.utils.hooks.RemovableHandle] = []
+        self.tensor_hook_handles: List[torch.utils.hooks.RemovableHandle] = []
+
+    def _fw(self, name):
+        def hook(mod, inputs, output):
+            buf = self.buffers[name]
+            if buf.batches >= buf.max_batches:
+                return
+            if not isinstance(inputs, (list, tuple)) or len(inputs) == 0:
+                return
+            x = inputs[0]
+            if not isinstance(x, torch.Tensor) or (not x.requires_grad):
+                return
+
+            ch_axis = _get_ch_axis(mod, x)
+            ch_axis = ch_axis if ch_axis >= 0 else (x.dim() + ch_axis)
+            C = x.size(ch_axis)
+
+            # 将通道维移到 dim=0，便于通道内抽样
+            x_perm = x.movedim(ch_axis, 0)  # [C, ...]
+            rest = x_perm.shape[1:]
+            rest_n = 1
+            for d in rest:
+                rest_n *= d
+
+            # 选择通道与通道内索引
+            m_ch = C if (self.max_channels is None or self.max_channels < 0) else min(C, self.max_channels)
+            # 按通道均匀分配样本
+            k_per_ch = max(1, self.per_batch_samples // m_ch)
+
+            # 随机选择通道
+            ch_ids = torch.randperm(C, device=x.device)[:m_ch].tolist()
+            xs_cpu_list, idxs_gpu_list = [], []
+            for c in ch_ids:
+                vec = x_perm[c].reshape(-1)
+                nn = vec.numel()
+                kk = min(k_per_ch, nn)
+                if kk <= 0:
+                    xs_cpu_list.append(torch.tensor([], dtype=torch.float32))
+                    idxs_gpu_list.append(torch.tensor([], dtype=torch.int64, device=x.device))
+                    continue
+                idx = torch.randint(0, nn, (kk,), device=x.device)
+                xs_cpu_list.append(vec[idx].detach().cpu())
+                idxs_gpu_list.append(idx)
+
+            # 梯度 hook：在反传时读取相同位置的梯度
+            def grad_hook(g):
+                try:
+                    g_perm = g.movedim(ch_axis, 0).reshape(C, -1)
+                    gs_cpu_list = []
+                    for c, idx in zip(ch_ids, idxs_gpu_list):
+                        if idx.numel() == 0:
+                            gs_cpu_list.append(torch.tensor([], dtype=torch.float32))
+                            continue
+                        gs_cpu_list.append(g_perm[c][idx].detach().cpu())
+                    buf.add(C=C, channel_ids=ch_ids, xs_cpu_list=xs_cpu_list, gs_cpu_list=gs_cpu_list)
+                except Exception:
+                    pass
+
+            h = x.register_hook(grad_hook)
+            self.tensor_hook_handles.append(h)
+        return hook
+
+    def attach(self):
+        for n, m in self.modules.items():
+            self.fwhandles.append(m.register_forward_hook(self._fw(n)))
+
+    def detach(self):
+        for h in self.fwhandles:
+            h.remove()
+        for h in self.tensor_hook_handles:
+            h.remove()
+        self.fwhandles.clear()
+        self.tensor_hook_handles.clear()
+
+    def get(self):
+        return self.buffers
+
+def _grid_search_clip_channelwise(xs_per_ch: List[torch.Tensor],
+                                  H_per_ch: torch.Tensor,
+                                  bit: int,
+                                  percentiles=(0.999, 0.9995, 0.9997, 0.9999, 0.99995, 0.99999)) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    """
+    对每个通道独立网格搜索 clip，返回：
+      clip[C], scale[C], zero[C]
+    """
+    C = len(xs_per_ch)
+    # 为“无样本通道”准备层级回退分布（全层聚合）
+    valid_vals = [xs for xs in xs_per_ch if isinstance(xs, torch.Tensor) and xs.numel() > 0]
+    layer_pos_clip = None
+    layer_sym_clip = None
+    if len(valid_vals) > 0:
+        all_vals = torch.cat(valid_vals)
+        pos_vals = all_vals[all_vals > 0]
+        if pos_vals.numel() > 0:
+            layer_pos_clip = torch.quantile(pos_vals, 0.999).item()
+        layer_sym_clip = torch.quantile(all_vals.abs(), 0.999).item()
+    clips, scales, zeros, clip_mins = [], [], [], []
+    qmin, qmax = 0, 2**bit - 1
+    for c in range(C):
+        xs = xs_per_ch[c]
+        Hs = float(H_per_ch[c].item()) if c < H_per_ch.numel() else 1.0
+        if xs.numel() == 0:
+            # 无样本通道：使用层级分位回退，优先非负回退，否则对称回退
+            if layer_pos_clip is not None:
+                clip, cmin = max(layer_pos_clip, 1e-6), 0.0
+                s, z = clip / max(qmax, 1), 0.0
+            elif layer_sym_clip is not None:
+                cc = max(layer_sym_clip, 1e-6)
+                clip, cmin = cc, -cc
+                s = (clip - cmin) / (qmax - qmin + 1e-12)
+                z = round((qmax + qmin) / 2.0)
+            else:
+                clip, cmin = 1.0, 0.0
+                s, z = clip / max(qmax, 1), 0.0
+        else:
+            neg = xs[xs < 0];pos = xs[xs > 0]
+            if neg.numel() == 0 or pos.numel() == 0:
+                if pos.numel() > 0:
+                    cc = max(torch.quantile(pos, 0.999).item(), 1e-6)
+                    cmin, clip = 0.0, cc
+                elif neg.numel() > 0:
+                    cc = max(torch.quantile(neg.abs(), 0.999).item(), 1e-6)
+                    cmin, clip = -cc, 0.0
+                else:
+                    # 如果neg和pos都为空（即xs全为0），使用默认值
+                    clip, cmin = 1.0, 0.0
+            else:
+                best_err = float('inf');
+                cmin, clip = -1.0, 1.0
+                for pn in (0.995, 0.997, 0.999):
+                    for pp in (0.995, 0.997, 0.999, 0.9995, 0.9997, 0.9999):
+                        cn = max(torch.quantile(neg.abs(), pn).item(), 1e-6)
+                        cp = max(torch.quantile(pos, pp).item(), 1e-6)
+                        lo, hi = -cn, cp
+                        s = (hi - lo) / (qmax - qmin + 1e-12)
+                        z_float = -lo / s
+                        z = int(max(qmin, min(qmax, round(z_float))))
+                        lo_aligned = (qmin - z) * s
+                        hi_aligned = (qmax - z) * s
+                        xs_clipped = torch.clamp(xs, lo_aligned, hi_aligned)
+                        q = torch.clamp(torch.round(xs_clipped / s + z), qmin, qmax)
+                        deq = (q - z) * s
+                        err = (deq - xs).pow(2).mean().item() * (Hs if Hs > 0 else 1.0)
+                        if err < best_err:
+                            best_err = err;
+                            cmin, clip = lo_aligned, hi_aligned
+            s = (clip - cmin) / (qmax - qmin + 1e-12)
+            z = int(max(qmin, min(qmax, round(-cmin / s))))
+        clips.append(clip); clip_mins.append(cmin); scales.append(s); zeros.append(z)
+    return (
+            torch.tensor(clips, dtype=torch.float32),
+            torch.tensor(scales, dtype=torch.float32),
+            torch.tensor(zeros, dtype=torch.float32),
+            torch.tensor(clip_mins, dtype=torch.float32),
+    )
+
+def _patch_inplace_acts(model: nn.Module, enable: bool):
+    known = (nn.ReLU, nn.GELU, nn.SiLU, nn.ReLU6, nn.LeakyReLU)
+    states = []
+    for m in model.modules():
+        if isinstance(m, known) and hasattr(m, 'inplace'):
+            states.append((m, bool(m.inplace)))
+            m.inplace = False if not enable else m.inplace
+    return states
+
+def _restore_inplace_acts(states):
+    for m, flag in states:
+        m.inplace = flag
+
+@torch.no_grad()
+def _teacher_forward(fp_model, inputs):
+    return fp_model(inputs)
+
+def calibrate_gptq_activations(fp_model: nn.Module,
+                               q_model: nn.Module,
+                               dataloader,
+                               act_bits: int = 6,
+                               num_batches: int = 64,
+                               per_batch_samples: int = 4096,
+                               max_channels: int = 128,
+                               device: str = 'cuda') -> Dict[str, Dict[str, Any]]:
+    """
+    基于 Fisher 对角的 per-channel 激活校准：
+    - 每层按通道采样 (<=max_channels)，每通道采样若干激活元素
+    - 用通道级 H 加权误差网格搜索 clip
+    - 写回每层的 per-channel qparams（scale/zero/clip[C]）
+    """
+    fp_model.eval().to(device)
+    q_model.eval().to(device)
+
+    inplace_states = _patch_inplace_acts(q_model, enable=False)
+    try:
+        targets = _get_gptq_layers(q_model)
+        hook = TensorHookMgr(targets, per_batch_samples, num_batches, max_channels)
+        hook.attach()
+
+        batches = 0
+        dl_it = iter(dataloader)
+        while batches < num_batches:
+            try:
+                batch = next(dl_it)
+            except StopIteration:
+                break
+            inputs = batch[0] if isinstance(batch, (list, tuple)) else batch
+            inputs = inputs.to(device)
+
+            with torch.no_grad():
+                teacher_out = _teacher_forward(fp_model, inputs)
+            student_out = q_model(inputs)
+            loss = _proxy_distill_loss(student_out, teacher_out)
+
+            q_model.zero_grad(set_to_none=True)
+            loss.backward()
+            batches += 1
+
+        hook.detach()
+        buffers = hook.get()
+
+        results = {}
+        for name, buf in buffers.items():
+            xs_per_ch, H_per_ch = buf.finalize()
+            if buf.C is None or buf.C == 0:
+                continue
+            clip_c, s_c, z_c, clip_min_c = _grid_search_clip_channelwise(xs_per_ch, H_per_ch, bit=act_bits)
+            results[name] = {
+                'clip': clip_c.tolist(),
+                'scale': s_c.tolist(),
+                'zero': z_c.tolist(),
+                'clip_min': clip_min_c.tolist()
+            }
+
+        for name, m in targets.items():
+            # 配置 per-channel 激活量化；Conv2d ch_axis=1，Linear ch_axis=-1
+            if isinstance(m, GPTQConv2d):
+                m.enable_activation_quant(bits=act_bits, symmetric=False, perchannel=True, ch_axis=1)
+            else:
+                m.enable_activation_quant(bits=act_bits, symmetric=False, perchannel=True, ch_axis=-1)
+            cfg = results.get(name, None)
+            if cfg is not None:
+                m.set_activation_qparams(scale=cfg['scale'], zero=cfg['zero'], clip=cfg['clip'], clip_min=cfg['clip_min'])
+
+        return results
+    finally:
+        _restore_inplace_acts(inplace_states)
