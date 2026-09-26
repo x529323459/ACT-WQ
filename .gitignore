@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.idea/
+.pytest_cache/
+QuantRTDetr/output/
+QuantRTDetr/pre_model/
+QuantRTDetr/data/
+QuantRTDetr/rtdetr/config.local.yml
